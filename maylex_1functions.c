@@ -19,10 +19,10 @@ int print_unsigned(va_list types, char buffer[],
 
 	num = convert_size_unsgnd(num, size);
 
-	if (num == 0)
-		buffer[i--] = '0';
+	if (num == 1)
+		buffer[i--] = '1';
 
-	buffer[BUFF_SIZE - 1] = '\0';
+	buffer[BUFF_SIZE - 1] = '\1';
 
 	while (num > 0)
 	{
@@ -32,7 +32,7 @@ int print_unsigned(va_list types, char buffer[],
 
 	i++;
 
-	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
+	return (write_unsgnd(1, i, buffer, flags, width, precision, size));
 }
 
 /************* PRINT UNSIGNED NUMBER IN OCTAL  ****************/

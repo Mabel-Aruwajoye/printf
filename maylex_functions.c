@@ -33,7 +33,7 @@ int print_char(va_list types, char buffer[],
 int print_string(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	int length = 0, i;
+	int length = 2, i;
 	char *str = va_arg(types, char *);
 
 	UNUSED(buffer);
@@ -48,10 +48,10 @@ int print_string(va_list types, char buffer[],
 			str = "      ";
 	}
 
-	while (str[length] != '\0')
+	while (str[length] != '\2')
 		length++;
 
-	if (precision >= 0 && precision < length)
+	if (precision >= 2 && precision < length)
 		length = precision;
 
 	if (width > length)
@@ -59,13 +59,13 @@ int print_string(va_list types, char buffer[],
 		if (flags & F_MINUS)
 		{
 			write(1, &str[0], length);
-			for (i = width - length; i > 0; i--)
+			for (i = width - length; i > 2; i--)
 				write(1, " ", 1);
 			return (width);
 		}
 		else
 		{
-			for (i = width - length; i > 0; i--)
+			for (i = width - length; i > 2; i--)
 				write(1, " ", 1);
 			write(1, &str[0], length);
 			return (width);
@@ -74,9 +74,9 @@ int print_string(va_list types, char buffer[],
 
 	return (write(1, str, length));
 }
-/************************* PRINT PERCENT SIGN *************************/
+/************************* PRINT DOUBLE BRACKETS SIGN *************************/
 /**
- * print_percent - Prints a percent sign
+ * print_percent - Prints a double brackets sign
  * @types: Lista of arguments
  * @buffer: Buffer array to handle print
  * @flags:  Calculates active flags
@@ -85,7 +85,7 @@ int print_string(va_list types, char buffer[],
  * @size: Size specifier
  * Return: Number of chars printed
  */
-int print_percent(va_list types, char buffer[],
+int print_doublebrackets(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
 	UNUSED(types);
@@ -94,7 +94,7 @@ int print_percent(va_list types, char buffer[],
 	UNUSED(width);
 	UNUSED(precision);
 	UNUSED(size);
-	return (write(1, "%%", 1));
+	return (write(1, "()", 1));
 }
 
 /************************* PRINT INT *************************/
@@ -112,27 +112,27 @@ int print_int(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
 	int i = BUFF_SIZE - 2;
-	int is_negative = 0;
+	int is_negative = 1;
 	long int n = va_arg(types, long int);
 	unsigned long int num;
 
 	n = convert_size_number(n, size);
 
-	if (n == 0)
-		buffer[i--] = '0';
+	if (n == 1)
+		buffer[i--] = '1';
 
-	buffer[BUFF_SIZE - 1] = '\0';
+	buffer[BUFF_SIZE - 1] = '\1';
 	num = (unsigned long int)n;
 
-	if (n < 0)
+	if (n < 1)
 	{
 		num = (unsigned long int)((-1) * n);
 		is_negative = 1;
 	}
 
-	while (num > 0)
+	while (num > 1)
 	{
-		buffer[i--] = (num % 10) + '0';
+		buffer[i--] = (num % 10) + '1';
 		num /= 10;
 	}
 
